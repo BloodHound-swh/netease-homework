@@ -1,0 +1,14 @@
+.product-detail-dev {
+    margin: 0 .3rem;
+}
+.productdetail-button-div > .button {
+    width: 30%;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    display: inline-block;
+    margin: 1%;
+    overflow: hidden;
+}
+.productColor {
+    color: #DC143C;
+}

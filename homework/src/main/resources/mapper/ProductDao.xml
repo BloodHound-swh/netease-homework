@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netease.homework.dao.ProductDao">
+    <select id="queryProduct" resultType="com.netease.homework.entity.Product">
+        SELECT product_id, product_name, product_desc, img_addr, product_price, priority,
+        create_time, update_time, enable_status, sell_status, seller_id, buyer_id
+		FROM product
+		WHERE enable_status = 1
+    </select>
+
+    <select id="queryProductByCondition" resultType="com.netease.homework.entity.Product">
+        SELECT product_id, product_name, product_desc, img_addr, product_price, priority,
+        create_time, update_time, enable_status, sell_status, seller_id, buyer_id
+        FROM product
+        <where>
+            <if test="productCondition.sellerId!=null">
+                and seller_id = #{productCondition.sellerId}
+            </if>
+            <if test="productCondition.buyerId!=null">
+                and buyer_id = #{productCondition.buyerId}
+            </if>
+            <if test="productCondition.enableStatus!=null">
+                and enable_status = #{productCondition.enableStatus}
+            </if>
+            <if test="productCondition.sellStatus!=null">
+                and sell_status = #{productCondition.sellStatus}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryProductById" resultType="com.netease.homework.entity.Product">
+        SELECT product_id, product_name, product_desc, img_addr, product_price, priority,
+        create_time, update_time, enable_status, sell_status, seller_id, buyer_id
+        FROM product
+        WHERE product_id = #{productId}
+    </select>
+
+    <update id="updateProduct" parameterType="com.netease.homework.entity.Product"
+            keyProperty="product_id" useGeneratedKeys="true">
+        UPDATE product
+        <set>
+            <if test="productName != null">product_name=#{productName},</if>
+            <if test="productDesc != null">product_desc=#{productDesc},</if>
+            <if test="imgAddr != null">img_addr=#{imgAddr},</if>
+            <if test="productPrice != null">product_price=#{productPrice},</if>
+            <if test="updateTime != null">update_time=#{updateTime},</if>
+            <if test="enableStatus != null">enable_status=#{enableStatus}</if>
+        </set>
+        WHERE product_id = #{productId}
+    </update>
+
+    <insert id="insertProduct" parameterType="com.netease.homework.entity.Product"
+            useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id">
+        INSERT INTO
+        product(product_name,product_desc,img_addr,
+		product_price,create_time,update_time,enable_status,
+		sell_status, seller_id)
+        VALUES
+        (#{productName},#{productDesc},#{imgAddr},
+		#{productPrice},#{createTime},#{updateTime},#{enableStatus},
+		#{sellStatus}, #{sellerId})
+    </insert>
+
+</mapper>

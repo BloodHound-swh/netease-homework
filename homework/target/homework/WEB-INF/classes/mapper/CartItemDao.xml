@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netease.homework.dao.CartItemDao">
+    <select id="queryCartItemByUserId" resultType="com.netease.homework.entity.CartItem">
+        SELECT cart_item_id, user_id, product_id, quantity, create_time, update_time
+        FROM cart_item
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>
